@@ -1,0 +1,15 @@
+syntax = "proto3";
+package kite.greet;
+
+message PingRequest {
+    string name id = 1;
+}
+
+message PongResponse {
+    string stentence = 1;
+}
+
+service PingService {
+    rpc GetItem(PingRequest) returns (PingResponse);
+}
+

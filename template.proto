@@ -35,3 +35,8 @@ message PageOption {
 message UUID {
   string value = 1;
 }
+
+enum Gender {
+  Male = 0;
+  Female = 1;
+}

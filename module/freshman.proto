@@ -1,0 +1,87 @@
+syntax = "proto3";
+package kite.freshman;
+
+import "google/protobuf/timestamp.proto";
+import "kite-proto/template.proto";
+import "kite-proto/token.proto";
+
+
+message MySelf {
+  string name = 1;
+  // deprecated, used to count real-name users.
+  // string uid = 2;
+  string student_id = 3;
+  // string secret = 4;
+  string college = 5;
+  string major = 6;
+  string campus = 7;
+  string building = 8;
+  // like 201, 302...
+  int32 room = 9;
+  int32 bed_index = 10;
+
+  message Counselor {
+    string name = 11;
+    string tel = 12;
+  }
+  bool visible = 13;
+  // JSON string, remember to check schema.
+  optional string contact = 14;
+}
+
+message Student {
+  string college = 1;
+  string major = 2;
+  string name = 3;
+  string building = 5;
+  int32 room = 6;
+  int32 bed_index = 7;
+
+  template.Gender gender = 8;
+  google.protobuf.Timestamp last_seen = 9;
+  string contact = 10;
+
+  optional string province = 4;
+  optional string city = 11;
+}
+
+message PersonalAnalysisResult {
+  int32 same_name = 1;
+  int32 same_city = 2;
+  int32 same_high_school = 3;
+
+  int32 college_count = 4;
+  message major {
+    int32 total = 5;
+    int32 boy = 6;
+    int32 girl = 7;
+  }
+}
+
+message FreshmanCredential {
+  oneof account {
+    string name = 2;
+    string student_id = 3;
+    string exam_id = 4;
+  }
+  string secret = 5;
+  optional string entrance_year = 6;
+}
+
+message StudentList {
+  repeated Student student_list = 1;
+}
+
+message FreshmanToken {
+  token.UserToken token = 1;
+  optional string entrance_year = 2;
+}
+
+service WelcomeService {
+  rpc CheckCredential(FreshmanCredential) returns (token.UserToken);
+  rpc QueryMySelf(FreshmanToken) returns (MySelf);
+  rpc GetRoommates(FreshmanToken) returns (StudentList);
+  rpc GetClassmates(FreshmanToken) returns (StudentList);
+  rpc GetPeopleMayKnow(FreshmanToken) returns (StudentList);
+  rpc GetPersonalAnalysis(FreshmanToken) returns (PersonalAnalysisResult);
+}

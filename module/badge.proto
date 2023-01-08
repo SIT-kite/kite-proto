@@ -1,0 +1,38 @@
+syntax = "proto3";
+package kite.badge;
+
+import "google/protobuf/timestamp.proto";
+import public "kite-proto/template.proto";
+
+enum ScanResult {
+    // 没有识别到校徽
+    NoBadge = 0;
+    // 当日领福卡次数已达到限制
+    ReachLimit = 1;
+    // 没有抽中
+    NoCard = 2;
+    // 抽中了
+    WinCard = 3;  
+}
+
+message ScanRecord {
+    int32 uid = 1;
+    int32 result = 2;
+    optional int32 card = 3;
+    google.protobuf.Timestamp ts = 4;
+}
+
+message Card {
+    int32 card_type = 1;
+    google.protobuf.Timestamp ts = 2;
+}
+
+message CardListResponse {
+    repeated Card card_list = 1;
+}
+
+service BadgeService {
+    rpc GetUserCardStorage(kite.template.EmptyRequestWithToken) returns (CardListResponse);
+    rpc AppendShareLog(kite.template.EmptyRequestWithToken) returns (kite.template.Empty);
+}
+

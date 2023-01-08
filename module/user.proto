@@ -2,8 +2,8 @@ syntax = "proto3";
 package kite.user;
 
 import "google/protobuf/timestamp.proto";
-import "kite-proto/template.proto";
-import "kite-proto/token.proto";
+import "proto/template.proto";
+import "proto/token.proto";
 
 
 // 小风筝用户信息

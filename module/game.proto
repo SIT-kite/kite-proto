@@ -2,8 +2,8 @@ syntax = "proto3";
 package kite.game;
 
 import "google/protobuf/timestamp.proto";
-import "kite-proto/template.proto";
-import "kite-proto/token.proto";
+import "proto/template.proto";
+import "proto/token.proto";
 
 
 // 游戏类型

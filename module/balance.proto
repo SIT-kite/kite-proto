@@ -2,7 +2,7 @@ syntax = "proto3";
 package kite.balance;
 
 import "google/protobuf/timestamp.proto";
-import "kite-proto/template.proto";
+import "proto/template.proto";
 
 // 房间电费余额信息
 message RoomBalance {

@@ -2,9 +2,9 @@ syntax = "proto3";
 package kite.freshman;
 
 import "google/protobuf/timestamp.proto";
-import "kite-proto/template.proto";
-import "kite-proto/token.proto";
-import "kite-proto/cmapus.proto";
+import "proto/template.proto";
+import "proto/token.proto";
+import "proto/cmapus.proto";
 
 
 // 新生数据表中的基本个人信息

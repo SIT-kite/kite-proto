@@ -2,8 +2,8 @@ syntax = "proto3";
 package kite.board;
 
 import "google/protobuf/timestamp.proto";
-import "kite-proto/template.proto";
-import "kite-proto/token.proto";
+import "proto/template.proto";
+import "proto/token.proto";
 
 
 // “风筝🪁时刻” 图片信息

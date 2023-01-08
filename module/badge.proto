@@ -2,7 +2,7 @@ syntax = "proto3";
 package kite.badge;
 
 import "google/protobuf/timestamp.proto";
-import "kite-proto/template.proto";
+import "proto/template.proto";
 
 // 用户 “扫福” 结果
 enum ScanResult {

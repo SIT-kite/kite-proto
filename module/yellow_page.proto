@@ -1,0 +1,20 @@
+syntax = "proto3";
+package kite.yellow_page;
+
+import "kite-proto/template.proto";
+
+
+message Contact {
+  optional string department = 1;
+  optional string name = 2;
+  string phone = 3;
+  optional string description = 4;
+}
+
+message YellowPageResponse {
+  repeated Contact contacts = 1;
+}
+
+service BalanceService {
+  rpc GetYellowPage(template.EmptyRequest) returns (YellowPageResponse);
+}

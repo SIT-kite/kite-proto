@@ -1,0 +1,41 @@
+syntax = "proto3";
+package kite.game;
+
+import "google/protobuf/timestamp.proto";
+import "kite-proto/template.proto";
+import "kite-proto/token.proto";
+
+
+enum GameType {
+  _2048 = 0;
+  wordle = 1;
+  compose_sit = 2;
+  tetris = 3;
+}
+
+message RankingItem {
+  int32 ranking = 1;
+  string user_description = 2;
+  GameType _type = 3;
+  int32 score = 4;
+}
+
+message GameRecord {
+  google.protobuf.Timestamp ts = 1;
+  GameType _type = 2;
+  int32 score = 3;
+}
+
+message RecordListRequest {
+  token.UserToken token = 1;
+  template.PageOption page = 2;
+}
+
+message RecordListResponse {
+  repeated GameRecord game_record_list = 1;
+}
+
+service GameService {
+  rpc SaveScore(GameRecord) returns (template.Empty);
+  rpc GetMyRecordList(RecordListRequest) returns (RecordListResponse);
+}

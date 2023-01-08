@@ -15,3 +15,17 @@ message EmptyRequest {}
 message EmptyRequestWithToken {
   kite.token.UserToken token = 1;
 }
+
+
+// Page sort method
+enum PageSort {
+  Asc = 0;
+  Desc = 1;
+}
+
+// Page options
+message PageOption {
+  int32 size = 1;
+  int32 index = 2;
+  optional PageSort sort = 3;
+}

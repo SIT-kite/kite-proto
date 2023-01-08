@@ -1,0 +1,42 @@
+syntax = "proto3";
+package kite.user;
+
+import "google/protobuf/timestamp.proto";
+import "kite-proto/template.proto";
+import "kite-proto/token.proto";
+
+
+message User {
+  // uid
+  int32 uid = 1;
+  // Student ID for students, and work ID for staffs.
+  string account = 2;
+  // Create time
+  google.protobuf.Timestamp create_time = 3;
+  // role flag
+  int32 role = 4;
+}
+
+message OaCredential {
+  string account = 1;
+  string password = 2;
+}
+
+message TlsClientStream {
+  oneof payload {
+    OaCredential credential = 1;
+    bytes tls_stream = 2;
+  }
+}
+
+message TlsServerStream {
+  oneof payload {
+    User user = 1;
+    bytes tls_stream = 2;
+  }
+}
+
+
+service UserService {
+  rpc login(TlsClientStream) returns (TlsServerStream);
+}

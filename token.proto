@@ -1,0 +1,7 @@
+syntax = "proto3";
+package kite.token;
+
+message UserToken {
+  int32 uid = 1;
+  string jwt_string = 2;
+}

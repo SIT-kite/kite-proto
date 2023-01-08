@@ -2,8 +2,9 @@ syntax = "proto3";
 package kite.badge;
 
 import "google/protobuf/timestamp.proto";
-import public "kite-proto/template.proto";
+import "kite-proto/template.proto";
 
+// 用户 “扫福” 结果
 enum ScanResult {
     // 没有识别到校徽
     NoBadge = 0;
@@ -15,15 +16,24 @@ enum ScanResult {
     WinCard = 3;  
 }
 
+
+// 用户 “扫福” 记录
 message ScanRecord {
-    int32 uid = 1;
-    int32 result = 2;
+    // 用户 ID
+    // int32 uid = 1;
+    // “扫福” 结果类型
+    ScanResult _type = 2;
+    // 抽到的卡类型。暂且考虑到扩展性，使用 int 类型表示
     optional int32 card = 3;
+    // 触发的时间
     google.protobuf.Timestamp ts = 4;
 }
 
+// 用户卡片
 message Card {
+    // 卡片类型
     int32 card_type = 1;
+    // 抽卡时间
     google.protobuf.Timestamp ts = 2;
 }
 
@@ -32,7 +42,10 @@ message CardListResponse {
 }
 
 service BadgeService {
+    // 获取用户所抽到的所有卡片
     rpc GetUserCardStorage(template.EmptyRequestWithToken) returns (CardListResponse);
+    // 记录用户分享事件
+    // 该方法用于增加用户抽卡次数（2022春节）
     rpc AppendShareLog(template.EmptyRequestWithToken) returns (template.Empty);
 }
 

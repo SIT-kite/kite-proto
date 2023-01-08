@@ -4,43 +4,65 @@ package kite.balance;
 import "google/protobuf/timestamp.proto";
 import "kite-proto/template.proto";
 
+// 房间电费余额信息
 message RoomBalance {
+  // 房间号，规则为 “10” + 楼号 + 房间号（仅限奉贤校区）
   int32 room = 1;
+  // 电费余额值，为空调电和普通用电余额所加之和
   float balance = 2;
+  // 上次更新日期，以该房间变化为准
   google.protobuf.Timestamp ts = 4;
 }
 
+// 消费情况
 message Bill {
+  // 横坐标信息，判断是天还是小时
   oneof identifier {
+    // 如：2022-2-1
     string date = 1;
+    // 如：19 （表示19时）
     string time = 2;
   };
+  // 电费较上一单位时间增加值，用于统计电费充值情况
   float increment = 3;
+  // 电费较上一单位时间减少值
   float decrement = 4;
 }
 
+// 电费使用排名
 message ConsumptionRank {
+  // 消费金额值
   float consumption = 1;
+  // 总排名
   int32 rank = 2;
+  // 总房间数
   int32 total_room = 3;
 }
 
+// 电费余额及排名的请求
 message BalanceRequest {
   int32 room_number = 1;
 }
 
+// 统计类型
 enum BillType {
+  // 以“日”为单位
   Daily = 0;
+  // 以“小时”为单位
   Hourly = 1;
 }
 
+// 电费使用情况请求
 message BillRequest {
   int32 room_number = 1;
   BillType _type = 2;
 }
 
 service BalanceService {
+  // 请求单一房间电费余额情况
   rpc GetRoomBalance(BalanceRequest) returns (RoomBalance);
+  // 请求单一房间电费排名情况
   rpc GetConsumptionRank(BalanceRequest) returns (ConsumptionRank);
+  // 按类型请求电费统计情况
   rpc GetBill(BillRequest) returns (Bill);
 }

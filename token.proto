@@ -1,6 +1,7 @@
 syntax = "proto3";
 package kite.token;
 
+// 用户访问令牌
 message UserToken {
   int32 uid = 1;
   string jwt_string = 2;

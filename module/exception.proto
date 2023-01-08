@@ -5,16 +5,26 @@ import "google/protobuf/timestamp.proto";
 import "kite-proto/template.proto";
 
 
+// 上报的异常信息，由前端 app 自动生成
 message Exception {
+  // 错误基本描述
   string error = 1;
+  // 错误发生的时间（用户本地）
   google.protobuf.Timestamp ts = 2;
+  // 调用栈
   string stack = 3;
+  // 用户平台，JSON
+  // 注意校验其结构
   string platform = 4;
+  // 其他，JSON
   string custom = 5;
+  // 设备信息， JSON
   string device = 6;
+  // 程序版本信息等，JSON
   string application = 7;
 }
 
 service ExceptionService {
-  rpc OnException(Exception) returns (template.Empty);
+  // 上报异常信息
+  rpc ReportException(Exception) returns (template.Empty);
 }

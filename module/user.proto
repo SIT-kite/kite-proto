@@ -6,37 +6,51 @@ import "kite-proto/template.proto";
 import "kite-proto/token.proto";
 
 
+// 小风筝用户信息
 message User {
   // uid
   int32 uid = 1;
-  // Student ID for students, and work ID for staffs.
+  // 账号，为学生学号，或教师工号。4、9或10位字母或数字
+  // 部分用户可能使用 authserver 的别名功能
   string account = 2;
-  // Create time
+  // 账号创建时间
   google.protobuf.Timestamp create_time = 3;
-  // role flag
-  int32 role = 4;
 }
 
+// OA 登录凭据
 message OaCredential {
+  // 账号，详见 User.account 描述
   string account = 1;
+  // OA 密码
   string password = 2;
 }
 
-message TlsClientStream {
+// 登录过程， client -> kite-server 流数据
+message ClientStream {
   oneof payload {
+    // OA 凭据
     OaCredential credential = 1;
+    // 来自 authserver 的 TLS 流数据，经由 client 转发到 kite-server
     bytes tls_stream = 2;
   }
 }
 
-message TlsServerStream {
+// 登录过程， kite-server -> app
+message ServerStream {
   oneof payload {
+    // 用户登录成功凭据
     User user = 1;
+    // 来自 kite-server 的数据，经由 client 发往 authserver 的流数据
     bytes tls_stream = 2;
   }
 }
 
 
 service UserService {
+  // 登录小风筝账户
+  //
+  // 受限于若干网络上的限制，需要使用用户侧手机作为 socks5 代理使用。该登录方案的原理是，建立一条 kite-server 和
+  // authserver.sit.edu.cn 之间的 TLS 连接，以确保通信不被用户（也可能是潜在的攻击者）监听和篡改。
+  // 该方案保证 server 可以可靠地验证用户提供的用户名和密码，同时避免了 IP 重试次数过多被防火墙封禁。
   rpc login(TlsClientStream) returns (TlsServerStream);
 }

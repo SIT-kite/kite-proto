@@ -1,7 +1,7 @@
 syntax = "proto3";
 package kite.template;
 
-import "kite-proto/token.proto";
+import "token.proto";
 
 // Empty message
 message Empty {}
@@ -13,7 +13,7 @@ message EmptyRequest {}
 
 // Empty request with token
 message EmptyRequestWithToken {
-  kite.token.UserToken token = 1;
+  token.UserToken token = 1;
 }
 
 
@@ -36,6 +36,7 @@ message UUID {
   string value = 1;
 }
 
+// 性别
 enum Gender {
   Male = 0;
   Female = 1;

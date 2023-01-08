@@ -2,32 +2,35 @@ syntax = "proto3";
 package kite.classroom_browser;
 
 import "kite-proto/template.proto";
+import "kite-proto/campus.proto";
 
-
-enum Campus {
-  Xuhui = 0;
-  Fengxian = 1;
-}
 
 message ClassroomQuery {
-  // The building to the classroom, for example, "一教"
+  // 教学楼名称，如 "一教"
   optional string building = 1;
-  // The region to the classroom, for example, "A", "B"
+  // 教学区域名称，如 "A", "B"
   optional string region = 2;
-  // Campus, for example, "徐汇校区" = 2 "奉贤校区" = 1
-  optional Campus campus = 3;
-  /// Day index in a week, 1 - 7
-  int32 day = 4;
-  /// Want time in bits.
-  /// When one bit set to 1, the corresponding course time is hoped. And the second place on the
-  /// right presents the first class (8:20 - 9:55).
-  /// For example, 110b to find the available classroom on class 1-2.
-  optional int32 time_flag = 5;
+  // 校区
+  optional campus.Campus campus = 3;
+  // 当前学期的周序号，一般为 1-18
+  int32 week = 4;
+  // 星期几，取值 1 - 7
+  int32 day = 5;
+  // 期望有空闲的时间，使用二进制位表示。
+  // 如果某一位（从右，从 0 开始计数）为 1，比如从右数第 1 位为 1, 那么表示希望第一节课空闲
+  // 
+  // 值 110b 表示希望 1-2 节课，即请求 8:20-9:55 空闲的教室，如果当前值省略，默认不筛选时间。
+  optional int32 time_flag = 6;
 }
 
+
+// 教室信息
 message Classroom {
+  // 教室名称，如 "C103"
   string title = 1;
+  // 教室使用情况，同 time_flag, 是一个用位表示的标记
   int32 busy_flag = 2;
+  // 教室容量，部分教室暂缺
   optional int32 capacity = 3;
 }
 
@@ -36,5 +39,6 @@ message ClassroomListResponse {
 }
 
 service ClassroomBrowserService {
+  // 根据给定位置和时间，获取空教室列表
   rpc GetAvailableClassroom(ClassroomQuery) returns (ClassroomListResponse);
 }

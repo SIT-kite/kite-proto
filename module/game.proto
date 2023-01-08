@@ -6,6 +6,7 @@ import "kite-proto/template.proto";
 import "kite-proto/token.proto";
 
 
+// 游戏类型
 enum GameType {
   _2048 = 0;
   wordle = 1;
@@ -13,29 +14,52 @@ enum GameType {
   tetris = 3;
 }
 
+// 排名中的单项
 message RankingItem {
+  // 名次
   int32 ranking = 1;
+  // 用户描述。昵称或用户自定义描述
   string user_description = 2;
+  // 游戏类型
   GameType _type = 3;
+  // 得分
   int32 score = 4;
 }
 
+// 单条游戏记录
 message GameRecord {
+  // 产生记录的时间戳
   google.protobuf.Timestamp ts = 1;
+  // 游戏类型
   GameType _type = 2;
+  // 得分值
   int32 score = 3;
+  // 游戏用时
+  optional int32 time_cost = 4;
 }
 
 message RecordListRequest {
+  // 用户凭据
   token.UserToken token = 1;
+  // 请求分页信息
   template.PageOption page = 2;
 }
+
 
 message RecordListResponse {
   repeated GameRecord game_record_list = 1;
 }
 
+message PublicRankingRequest {
+  GameType _type = 1;
+  template.PageOption page = 2;
+}
+
 service GameService {
+  // 保存用户游戏记录
   rpc SaveScore(GameRecord) returns (template.Empty);
+  // 获取公共游戏排名列表
+  rpc GetPublicRanking(PublicRankingRequest) returns (RecordListResponse);
+  // 获取个人游戏记录
   rpc GetMyRecordList(RecordListRequest) returns (RecordListResponse);
 }

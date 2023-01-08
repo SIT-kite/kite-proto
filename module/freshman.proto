@@ -4,67 +4,105 @@ package kite.freshman;
 import "google/protobuf/timestamp.proto";
 import "kite-proto/template.proto";
 import "kite-proto/token.proto";
+import "kite-proto/cmapus.proto";
 
 
+// 新生数据表中的基本个人信息
 message MySelf {
+  // 姓名
   string name = 1;
-  // deprecated, used to count real-name users.
+  // 在小程序时期，由于每位用户对应一个 openid, 进而注册产生 uid
+  // 该字段用于统计注册的新生数。现已废弃。
   // string uid = 2;
+  // 9或10位学号
   string student_id = 3;
+  // 验证码（密码），由身份证号生成
   // string secret = 4;
+  // 学院名称
   string college = 5;
+  // 专业名称（注意，可能较长）
   string major = 6;
+  // 校区. TODO: 该字段为后端返回得到，暂时使用 string 表示
   string campus = 7;
+  // 宿舍楼号。部分徐汇校区的寝室楼形如 “南-18”，需要使用字符串表示
   string building = 8;
-  // like 201, 302...
+  // 寝室号，如 201, 302...
   int32 room = 9;
+  // 床号，一般是 1-5
   int32 bed_index = 10;
 
+  // 辅导员信息
   message Counselor {
+    // 姓名
     string name = 11;
+    // 电话
     string tel = 12;
   }
+
+  // 是否对 “可能认识的人” 可见
   bool visible = 13;
-  // JSON string, remember to check schema.
+  // 联系方式， JSON 字符串，注意校验其结构
   optional string contact = 14;
 }
 
+// 同学基本信息（舍友、可能认识的人或班级同学）
 message Student {
+  // 学院
   string college = 1;
+  // 专业
   string major = 2;
+  // 姓名
   string name = 3;
+  // 寝室楼号
   string building = 5;
+  // 宿舍门号
   int32 room = 6;
+  // 床号
   int32 bed_index = 7;
-
+  // 性别
   template.Gender gender = 8;
+  // 该用户上次访问的时间
   google.protobuf.Timestamp last_seen = 9;
+  // 用户联系方式
   string contact = 10;
-
+  // 所在省份，研究生、专升本、专科数据可能不全
   optional string province = 4;
+  // 所在城市，研究生、专升本、专科数据可能不全。
+  // 且某些非直辖市的数据可能包含 `xx 市 xx 区`，长度较长
   optional string city = 11;
 }
 
+// 我的 “新生数据” 分析
 message PersonalAnalysisResult {
-  int32 same_name = 1;
-  int32 same_city = 2;
-  int32 same_high_school = 3;
+  // 该届与我同名的人数
+  uint32 same_name = 1;
+  // 该届与我来自同一城市（区）
+  uint32 same_city = 2;
+  // 来自同一高中的人数
+  uint32 same_high_school = 3;
 
-  int32 college_count = 4;
+  // 该届学院总人数
+  uint32 college_count = 4;
+  // 该届专业人数情况
   message major {
+    // 专业总人数
     int32 total = 5;
+    // 男生人数
     int32 boy = 6;
+    // 女生人数
     int32 girl = 7;
   }
 }
 
+// “迎新” 模块登录凭证
 message FreshmanCredential {
-  oneof account {
-    string name = 2;
-    string student_id = 3;
-    string exam_id = 4;
-  }
+  // 账户（姓名、学号或准考证号）
+  // 部分用户信息不包含准考证号，但一定包含前两项
+  string account = 2;
+  // 用户认证验证码
+  // 一般用身份证后 6 位，也可能使用倒数 2-7 位，数据处理时决定
   string secret = 5;
+  // 入学年份
   optional string entrance_year = 6;
 }
 
@@ -73,15 +111,23 @@ message StudentList {
 }
 
 message FreshmanToken {
+  // 用户通用 JWT 信息
   token.UserToken token = 1;
+  // 入学年份
   optional string entrance_year = 2;
 }
 
 service WelcomeService {
+  // 类似登录操作，成功后返回一个通用 JWT 凭据
   rpc CheckCredential(FreshmanCredential) returns (token.UserToken);
+  // 获取个人相关信息
   rpc QueryMySelf(FreshmanToken) returns (MySelf);
+  // 获取舍友列表
   rpc GetRoommates(FreshmanToken) returns (StudentList);
+  // 获取同班同学列表
   rpc GetClassmates(FreshmanToken) returns (StudentList);
+  // 获取 “可能认识的人” 列表
   rpc GetPeopleMayKnow(FreshmanToken) returns (StudentList);
+  // 获取个人数据分析（美名曰“新生大数据”），详见 `PersonalAnalysisResult`
   rpc GetPersonalAnalysis(FreshmanToken) returns (PersonalAnalysisResult);
 }

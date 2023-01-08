@@ -10,6 +10,7 @@ message PongResponse {
 }
 
 service PingService {
+    // 发送测试用 ping 请求
     rpc Ping(PingRequest) returns (PongResponse);
 }
 

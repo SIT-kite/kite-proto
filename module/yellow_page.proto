@@ -4,10 +4,15 @@ package kite.yellow_page;
 import "kite-proto/template.proto";
 
 
+// 联系人信息
 message Contact {
+  // 部门
   optional string department = 1;
+  // 姓名
   optional string name = 2;
+  // 电话号码
   string phone = 3;
+  // 其他描述信息，可能是该部门位置
   optional string description = 4;
 }
 
@@ -16,5 +21,6 @@ message YellowPageResponse {
 }
 
 service BalanceService {
+  // 请求黄页联系人列表
   rpc GetYellowPage(template.EmptyRequest) returns (YellowPageResponse);
 }

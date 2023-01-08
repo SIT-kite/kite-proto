@@ -6,26 +6,41 @@ import "kite-proto/template.proto";
 import "kite-proto/token.proto";
 
 
+// “风筝🪁时刻” 图片信息
 message Picture {
+  // 图片 UUID
   template.UUID uuid = 1;
+  // 上传者 UID
   int32 uid = 2;
+  // 上传者描述， 昵称（如果有的话）或自动生成的描述
   string publisher = 3;
+  // 原始图片 URL
   string origin_url = 4;
+  // 缩略图 URL
   string thumbnail = 5;
+  // 上传的时间戳
   google.protobuf.Timestamp ts = 6;
 }
 
-message BoardPictureList {
+// 图片列表
+message PictureListResponse {
   repeated Picture picture_list = 1;
 }
 
+// TODO: 使用七牛云 SDK
+// 请求上传图片
 message UploadRequest {
+  // 用户访问令牌
   token.UserToken token = 1;
+  // 图片数据
   bytes payload = 2;
 }
 
 service Board {
-  rpc GetBoardPictureList(template.EmptyRequest) returns (BoardPictureList);
-  rpc GetMyUpload(template.EmptyRequestWithToken) returns (BoardPictureList);
+  // 获取公共图片列表
+  rpc GetPictureListResponse(template.PageOption) returns (PictureListResponse);
+  // 获取用户自己上传列表
+  rpc GetMyUpload(template.EmptyRequestWithToken) returns (PictureListResponse);
+  // 上传图片
   rpc Upload(UploadRequest) returns (Picture);
 }

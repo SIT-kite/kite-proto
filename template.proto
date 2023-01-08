@@ -29,3 +29,9 @@ message PageOption {
   int32 index = 2;
   optional PageSort sort = 3;
 }
+
+
+// UUID type
+message UUID {
+  string value = 1;
+}

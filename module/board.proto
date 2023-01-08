@@ -1,0 +1,31 @@
+syntax = "proto3";
+package kite.board;
+
+import "google/protobuf/timestamp.proto";
+import "kite-proto/template.proto";
+import "kite-proto/token.proto";
+
+
+message Picture {
+  template.UUID uuid = 1;
+  int32 uid = 2;
+  string publisher = 3;
+  string origin_url = 4;
+  string thumbnail = 5;
+  google.protobuf.Timestamp ts = 6;
+}
+
+message BoardPictureList {
+  repeated Picture picture_list = 1;
+}
+
+message UploadRequest {
+  token.UserToken token = 1;
+  bytes payload = 2;
+}
+
+service Board {
+  rpc GetBoardPictureList(template.EmptyRequest) returns (BoardPictureList);
+  rpc GetMyUpload(template.EmptyRequestWithToken) returns (BoardPictureList);
+  rpc Upload(UploadRequest) returns (Picture);
+}

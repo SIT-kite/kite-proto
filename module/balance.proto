@@ -1,0 +1,46 @@
+syntax = "proto3";
+package kite.balance;
+
+import "google/protobuf/timestamp.proto";
+import "kite-proto/template.proto";
+
+message RoomBalance {
+  int32 room = 1;
+  float balance = 2;
+  google.protobuf.Timestamp ts = 4;
+}
+
+message Bill {
+  oneof identifier {
+    string date = 1;
+    string time = 2;
+  };
+  float increment = 3;
+  float decrement = 4;
+}
+
+message ConsumptionRank {
+  float consumption = 1;
+  int32 rank = 2;
+  int32 total_room = 3;
+}
+
+message BalanceRequest {
+  int32 room_number = 1;
+}
+
+enum BillType {
+  Daily = 0;
+  Hourly = 1;
+}
+
+message BillRequest {
+  int32 room_number = 1;
+  BillType _type = 2;
+}
+
+service BalanceService {
+  rpc GetRoomBalance(BalanceRequest) returns (RoomBalance);
+  rpc GetConsumptionRank(BalanceRequest) returns (ConsumptionRank);
+  rpc GetBill(BillRequest) returns (Bill);
+}

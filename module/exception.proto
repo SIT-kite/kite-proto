@@ -1,0 +1,20 @@
+syntax = "proto3";
+package kite.exception;
+
+import "google/protobuf/timestamp.proto";
+import "kite-proto/template.proto";
+
+
+message Exception {
+  string error = 1;
+  google.protobuf.Timestamp ts = 2;
+  string stack = 3;
+  string platform = 4;
+  string custom = 5;
+  string device = 6;
+  string application = 7;
+}
+
+service ExceptionService {
+  rpc OnException(Exception) returns (template.Empty);
+}

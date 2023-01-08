@@ -32,7 +32,7 @@ message CardListResponse {
 }
 
 service BadgeService {
-    rpc GetUserCardStorage(kite.template.EmptyRequestWithToken) returns (CardListResponse);
-    rpc AppendShareLog(kite.template.EmptyRequestWithToken) returns (kite.template.Empty);
+    rpc GetUserCardStorage(template.EmptyRequestWithToken) returns (CardListResponse);
+    rpc AppendShareLog(template.EmptyRequestWithToken) returns (template.Empty);
 }
 

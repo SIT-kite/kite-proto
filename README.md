@@ -1,9 +1,9 @@
 
 # 上应小风筝 gRPC 约定
 
-本仓库下的 protobuf3 协议定义，适用于上应小风筝 [kite-server](https://github.com/SIT-kite/kite-server) 与 [kite-server](https://github.com/SIT-kite/kite-agent) 之间的 gRPC 通信。
+本仓库下的 protobuf3 协议定义，适用于上应小风筝 [kite-server](https://github.com/SIT-kite/kite-server) 与 [kite-app](https://github.com/SIT-kite/kite-app) 之间的 gRPC 通信。
 
-详细说明请参考 server 与 agent 的代码，以及仓库内 proto 文件的说明。
+详细说明请参考 server 与 app 的代码，以及仓库内 proto 文件的说明。
 
 **为什么使用 gRPC？**
 

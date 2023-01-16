@@ -1,5 +1,5 @@
 syntax = "proto3";
-package kite.token;
+package token;
 
 // 用户访问令牌
 message UserToken {

@@ -1,5 +1,5 @@
 syntax = "proto3";
-package kite.freshman;
+package freshman;
 
 import "google/protobuf/timestamp.proto";
 import "template.proto";

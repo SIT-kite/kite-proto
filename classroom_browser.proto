@@ -1,5 +1,5 @@
 syntax = "proto3";
-package kite.classroom_browser;
+package classroom_browser;
 
 import "typing.proto";
 

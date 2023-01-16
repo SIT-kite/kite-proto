@@ -1,5 +1,5 @@
 syntax = "proto3";
-package kite.template;
+package template;
 
 import "token.proto";
 

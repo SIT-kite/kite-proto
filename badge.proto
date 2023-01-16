@@ -1,5 +1,5 @@
 syntax = "proto3";
-package kite.badge;
+package badge;
 
 import "google/protobuf/timestamp.proto";
 import "template.proto";

@@ -1,5 +1,5 @@
 syntax = "proto3";
-package kite.game;
+package game;
 
 import "google/protobuf/timestamp.proto";
 import "template.proto";

@@ -1,5 +1,5 @@
 syntax = "proto3";
-package kite.balance;
+package balance;
 
 import "google/protobuf/timestamp.proto";
 

@@ -57,11 +57,16 @@ message BillRequest {
   BillType _type = 2;
 }
 
+// 电费使用情况结果
+message BillResponse {
+  repeated Bill bill_list = 1;
+}
+
 service BalanceService {
   // 请求单一房间电费余额情况
   rpc GetRoomBalance(BalanceRequest) returns (RoomBalance);
   // 请求单一房间电费排名情况
   rpc GetConsumptionRank(BalanceRequest) returns (ConsumptionRank);
   // 按类型请求电费统计情况
-  rpc GetBill(BillRequest) returns (Bill);
+  rpc GetBill(BillRequest) returns (BillResponse);
 }

@@ -1,8 +1,7 @@
 syntax = "proto3";
 package kite.classroom_browser;
 
-import "proto/template.proto";
-import "proto/campus.proto";
+import "typing.proto";
 
 
 message ClassroomQuery {
@@ -11,7 +10,7 @@ message ClassroomQuery {
   // 教学区域名称，如 "A", "B"
   optional string region = 2;
   // 校区
-  optional campus.Campus campus = 3;
+  optional typing.Campus campus = 3;
   // 当前学期的周序号，一般为 1-18
   int32 week = 4;
   // 星期几，取值 1 - 7

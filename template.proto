@@ -1,7 +1,7 @@
 syntax = "proto3";
 package kite.template;
 
-import "proto/token.proto";
+import "token.proto";
 
 // Empty message
 message Empty {}

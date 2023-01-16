@@ -2,8 +2,8 @@ syntax = "proto3";
 package kite.user;
 
 import "google/protobuf/timestamp.proto";
-import "proto/template.proto";
-import "proto/token.proto";
+import "template.proto";
+import "token.proto";
 
 
 // 小风筝用户信息
@@ -52,5 +52,5 @@ service UserService {
   // 受限于若干网络上的限制，需要使用用户侧手机作为 socks5 代理使用。该登录方案的原理是，建立一条 kite-server 和
   // authserver.sit.edu.cn 之间的 TLS 连接，以确保通信不被用户（也可能是潜在的攻击者）监听和篡改。
   // 该方案保证 server 可以可靠地验证用户提供的用户名和密码，同时避免了 IP 重试次数过多被防火墙封禁。
-  rpc Login(stream TlsClientStream) returns (stream TlsServerStream);
+  rpc Login(stream ClientStream) returns (stream ServerStream);
 }

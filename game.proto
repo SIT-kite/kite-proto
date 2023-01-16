@@ -2,13 +2,13 @@ syntax = "proto3";
 package kite.game;
 
 import "google/protobuf/timestamp.proto";
-import "proto/template.proto";
-import "proto/token.proto";
+import "template.proto";
+import "token.proto";
 
 
 // 游戏类型
 enum GameType {
-  _2048 = 0;
+  g2048 = 0;
   wordle = 1;
   compose_sit = 2;
   tetris = 3;

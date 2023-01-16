@@ -2,7 +2,7 @@ syntax = "proto3";
 package kite.exception;
 
 import "google/protobuf/timestamp.proto";
-import "proto/template.proto";
+import "template.proto";
 
 
 // 上报的异常信息，由前端 app 自动生成

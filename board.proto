@@ -38,9 +38,9 @@ message UploadRequest {
 
 service BoardService {
   // 获取公共图片列表
-  rpc GetPictureListResponse(template.PageOption) returns (PictureListResponse);
+  rpc GetPictureList(template.PageOption) returns (PictureListResponse);
   // 获取用户自己上传列表
-  rpc GetMyUpload(template.EmptyRequestWithToken) returns (PictureListResponse);
+  rpc GetMyUpload(template.EmptyRequest) returns (PictureListResponse);
   // 上传图片
   rpc Upload(UploadRequest) returns (Picture);
 }

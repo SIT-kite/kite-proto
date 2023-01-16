@@ -43,9 +43,9 @@ message CardListResponse {
 
 service BadgeService {
     // 获取用户所抽到的所有卡片
-    rpc GetUserCardStorage(template.EmptyRequestWithToken) returns (CardListResponse);
+    rpc GetUserCardStorage(template.EmptyRequest) returns (CardListResponse);
     // 记录用户分享事件
     // 该方法用于增加用户抽卡次数（2022春节）
-    rpc AppendShareLog(template.EmptyRequestWithToken) returns (template.Empty);
+    rpc AppendShareLog(template.EmptyRequest) returns (template.Empty);
 }
 

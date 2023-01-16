@@ -7,14 +7,8 @@ import "token.proto";
 message Empty {}
 
 
-// Empty request without token
+// Empty request
 message EmptyRequest {}
-
-
-// Empty request with token
-message EmptyRequestWithToken {
-  token.UserToken token = 1;
-}
 
 
 // Page sort method

@@ -14,7 +14,7 @@ message RoomBalance {
 }
 
 // 消费情况
-message Bill {
+message BillItem {
   // 横坐标信息，判断是天还是小时
   oneof identifier {
     // 如：2022-2-1
@@ -54,12 +54,12 @@ enum BillType {
 // 电费使用情况请求
 message BillRequest {
   int32 room_number = 1;
-  BillType _type = 2;
+  BillType type = 2;
 }
 
 // 电费使用情况结果
 message BillResponse {
-  repeated Bill bill_list = 1;
+  repeated BillItem bill_list = 1;
 }
 
 service BalanceService {

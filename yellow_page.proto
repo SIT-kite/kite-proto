@@ -20,7 +20,7 @@ message YellowPageResponse {
   repeated Contact contacts = 1;
 }
 
-service BalanceService {
+service YellowPageService {
   // 请求黄页联系人列表
   rpc GetYellowPage(template.EmptyRequest) returns (YellowPageResponse);
 }

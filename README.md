@@ -29,7 +29,7 @@ yay -S grpcurl grpcui
 2. 如本地的 gRPC 服务器采用明文传输（HTTP/2 without TLS），则应添加 `-plaintext` 参数。
 3. 服务器程序的地址和端口。
 4. 对于 grpcurl, 需要提供请求的参数，用 `-d` 表示。如 `-d '{"text: hello world"}'`，对于 grpcui, 参数值在浏览器上填写。
-5. 如果服务端不支持反射，会抛出类似错误：`Error invoking method "/kite.PingService/ping": failed to query for service descriptor "/kite.PingService": server does not support the reflection API`，此时需要通过 `-proto` 指定 .proto 文件。
+5. 如果服务端不支持反射，会抛出类似错误：`Error invoking method "/kite.PingService/ping": failed to query for service descriptor "/kite.PingService": server does not support the reflection API`，此时需要通过 `-proto` 指定 .proto 文件。(2023.2.2 当前 kite-server 已支持反射。)
 
 举例：
 

@@ -1,0 +1,15 @@
+syntax = "proto3";
+package captcha;
+
+
+message CaptchaRecognizeRequest {
+  bytes image = 1;
+}
+
+message CaptchaRecognizeResponse {
+  string text = 1;
+}
+
+service CaptchaService {
+  rpc Recognize(CaptchaRecognizeRequest) returns (CaptchaRecognizeResponse);
+}

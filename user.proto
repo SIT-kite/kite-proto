@@ -42,6 +42,8 @@ message ServerStream {
     User user = 1;
     // 来自 kite-server 的数据，经由 client 发往 authserver 的流数据
     bytes tls_stream = 2;
+    // 用户登录失败的错误提示
+    string message = 3;
   }
 }
 
